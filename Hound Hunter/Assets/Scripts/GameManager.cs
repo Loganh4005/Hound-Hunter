@@ -18,12 +18,39 @@ public class GameManager : Monobehaviour
     // Singlton
     public static GameManager instance;
 
-    private Awake() {
-        
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Debug.Log("Instance already exists, destroying object!");
+            Destroy(this);
+        }
     }
 
     private void Start() 
     {
+        score = 0;
+        //PlayerPrefs.SetInt("highScore", highScore);
+        highScore = PlayerPrefs.GetInt("highScore");
+        highScoreText = highScore;
+    }
+    public void SpawnHound() {
         
+    }
+    public void SpawnDog() {
+
+    }
+    public void HoundKilled() {
+
+    }
+    public void DogKilled() {
+
+    }
+    public void GameOver() {
+
     }
 }
