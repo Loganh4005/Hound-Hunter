@@ -18,11 +18,29 @@ public class Dog : MonoBehaviour {
 			Die();
 		}
 	}
-
+    public void Update () {
+        GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
+    }
 	void Die ()
 	{
 		GameManager.instance.DogKilled(id);
 		Destroy(gameObject);
 	}
+    void OnTriggerEnter2D()
+    {
+        grounded = true;
+    }
+    void OnTriggerExit2D()
+    {
+        grounded = false;
+    }
+    void Move() {
 
+    }
+    IEnumerable waitTillMove() {
+        Random rnd = new Random();
+        int num = rnd.Next(0,10);
+        //yield WaitForSeconds(num);
+        Move();
+    }
 }

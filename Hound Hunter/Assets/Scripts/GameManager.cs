@@ -52,8 +52,15 @@ public class GameManager : Monobehaviour
             highScore = score;
             PlayerPrefs.SetInt("highScore", highScore);
         }
+        if (dogs.Count = 0) {
+            GameOver();
+        }
+        if (hounds.Count = 0) {
+            NewWave();
+        }
     }
     public void NewWave() {
+        wave++;
         for (int i = wave * 5; i <= 0; i--) {
             SpawnHound(); 
         }
@@ -64,11 +71,13 @@ public class GameManager : Monobehaviour
     public void SpawnHound() {
         Hound hound = Instantiate(houndPrefab); // Add position at home!
         hounds.Add(nextHound, hound);
+        hound.id = nextHound;
         nextHound++;
     }
     public void SpawnDog() {
         Dog dog = Instantiate(dogPrefab);
         dogs.Add(nextDog, dog);
+        dog.id = nextDog;
         nextDog++;
         
     }
