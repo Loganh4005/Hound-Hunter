@@ -16,11 +16,19 @@ public class Bullet : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D hitInfo)
 	{
-		Enemy enemy = hitInfo.GetComponent<Enemy>();
-		if (enemy != null)
-		{
-			enemy.TakeDamage(damage);
+		if (hitInfo.gameObject.layer == 7)
+			return;
+		if (hitInfo.TryGetComponent<Hound>(out Hound target))
+        {
+			
+			target.TakeDamage(damage);
+		} else if (hitInfo.TryGetComponent<Dog>(out Dog target1))
+        {
+			
+			target1.TakeDamage(damage);
 		}
+		
+		
 
 		Instantiate(impactEffect, transform.position, transform.rotation);
 

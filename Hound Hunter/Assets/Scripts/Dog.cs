@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class Dog : MonoBehaviour {
 
+    //Movement
+    public float speed;
+    public float jump;
+    float moveVelocity;
+
+    //Grounded Vars
+    bool grounded = true;
+    SpriteRenderer sprite;
     public int id;
 	public int health = 50;
 
 	public GameObject deathEffect;
 
-	public void TakeDamage (int damage)
+    public void Start()
+    {
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
+    public void TakeDamage (int damage)
 	{
 		health -= damage;
 
@@ -38,9 +51,9 @@ public class Dog : MonoBehaviour {
 
     }
     IEnumerable waitTillMove() {
-        Random rnd = new Random();
-        int num = rnd.Next(0,10);
-        //yield WaitForSeconds(num);
+        
+        int num = Random.Range(0,10);
+        yield return new WaitForSeconds(num);
         Move();
     }
 }

@@ -1,53 +1,46 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour 
+public class PlayerMovement : MonoBehaviour
 {
 
-    //Movement
-    public float speed;
-    public float jump;
-    float moveVelocity;
+	public CharectorControlle controller;
+	public Animator animator;
 
-    //Grounded Vars
-    bool grounded = true;
-    SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+	public float runSpeed = 40f;
 
-    void Update () 
-    {
-        //Jumping
-        if (Input.GetKeyDown (KeyCode.Space) || Input.GetKeyDown (KeyCode.UpArrow) || Input.GetKeyDown (KeyCode.W)) 
-        {
-            if(grounded)
-            {
-                GetComponent<Rigidbody2D> ().velocity = new Vector2 (GetComponent<Rigidbody2D> ().velocity.x, jump);
-            }
-        }
+	float horizontalMove = 0f;
+	bool jump = false;
+	bool crouch = false;
 
-        moveVelocity = 0;
+	// Update is called once per frame
+	void Update()
+	{
 
-        //Left Right Movement
-        if (Input.GetKey (KeyCode.LeftArrow) || Input.GetKey (KeyCode.A)) 
-        {
-            SpriteRenderer.FlipX = false;
-            moveVelocity = -speed;
-        }
-        if (Input.GetKey (KeyCode.RightArrow) || Input.GetKey (KeyCode.D)) 
-        {
-            moveVelocity = speed;
-            SpriteRenderer.FlipX = true;
-        }
+		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        GetComponent<Rigidbody2D> ().velocity = new Vector2 (moveVelocity, GetComponent<Rigidbody2D> ().velocity.y);
+		animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 
-    }
-    //Check if Grounded
-    void OnTriggerEnter2D()
-    {
-        grounded = true;
-    }
-    void OnTriggerExit2D()
-    {
-        grounded = false;
-    }
+		if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+		{
+			jump = true;
+			animator.SetBool("IsJumping", true);
+		}
+
+
+	}
+
+	public void OnLanding()
+	{
+		animator.SetBool("IsJumping", false);
+	}
+
+
+	void FixedUpdate()
+	{
+		// Move our character
+		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+		jump = false;
+	}
 }

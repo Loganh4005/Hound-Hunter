@@ -11,7 +11,7 @@ public class RayCastWeapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Fire1"))
+		if (Input.GetMouseButtonDown(0))
 		{
 			StartCoroutine(Shoot());
 		}
@@ -23,11 +23,24 @@ public class RayCastWeapon : MonoBehaviour {
 
 		if (hitInfo)
 		{
-			Enemy enemy = hitInfo.transform.GetComponent<Enemy>();
-			if (enemy != null)
-			{
-				enemy.TakeDamage(damage);
+			
+			if (hitInfo.GetType() == typeof(Dog))
+            {
+				Dog target = hitInfo.transform.GetComponent<Dog>();
+				if (target != null)
+				{
+					target.TakeDamage(damage);
+				}
+			} else
+            {
+				Hound target = hitInfo.transform.GetComponent<Hound>();
+				if (target != null)
+				{
+					target.TakeDamage(damage);
+				}
 			}
+			
+			
 
 			Instantiate(impactEffect, hitInfo.point, Quaternion.identity);
 
