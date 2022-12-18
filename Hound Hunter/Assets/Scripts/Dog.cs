@@ -16,6 +16,8 @@ public class Dog : MonoBehaviour {
 	public int health = 50;
 
 	public GameObject deathEffect;
+    public Vector3 target;
+    public bool isLerping;
 
     public void Start()
     {
@@ -48,7 +50,10 @@ public class Dog : MonoBehaviour {
         grounded = false;
     }
     void Move() {
-
+        if (isLerping)
+        {
+            transform.position = Vector3.Lerp(transform.position, target, Time.deltaTime * 1f);
+        }
     }
     IEnumerable waitTillMove() {
         

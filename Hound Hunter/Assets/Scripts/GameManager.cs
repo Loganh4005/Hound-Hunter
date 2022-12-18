@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int score;
     public int highScore;
     public int wave = 0;
+    public int highWave;
     public GameObject player;
     public GameObject houndPrefab;
     public GameObject dogPrefab;
@@ -18,6 +19,9 @@ public class GameManager : MonoBehaviour
     
     public int nextDog;
     public int nextHound;
+
+    public LayerMask dontSpawnLayer;
+        
     // UI
     
     public TMP_Text scoreText;
@@ -46,6 +50,7 @@ public class GameManager : MonoBehaviour
         //PlayerPrefs.SetInt("highScore", highScore);
         highScore = PlayerPrefs.GetInt("highScore");
         highScoreText.text = "High Score: " + highScore;
+        highWave = PlayerPrefs.GetInt("highWave");
         NewWave();
     }
     private void Update() {
@@ -55,6 +60,26 @@ public class GameManager : MonoBehaviour
         if (score > highScore) {
             highScore = score;
             PlayerPrefs.SetInt("highScore", highScore);
+            //if (PlayerPrefs.GetString("username") == "")
+            //{
+                Leaderboard.instance.SubmitScore(score, 0);
+            //}
+            highScoreText.text = "High Score: " + highScore;
+
+        }
+        if (wave < 0)
+        {
+            GameOver();
+        }
+        if (wave > highWave)
+        {
+            highWave = wave;
+            PlayerPrefs.SetInt("highWave", highWave);
+            //if (PlayerPrefs.GetString("username") == "")
+            //{
+            Leaderboard.instance.SubmitScore(wave, 1);
+            //}
+
         }
         if (dogs.Count == 0) {
             GameOver();
@@ -110,7 +135,21 @@ public class GameManager : MonoBehaviour
         float y = Random.Range(boundsCollider.bounds.center.y - boundsCollider.bounds.extents.y, boundsCollider.bounds.center.y + boundsCollider.bounds.extents.y);
         float z = Random.Range(boundsCollider.bounds.center.z - boundsCollider.bounds.extents.z, boundsCollider.bounds.center.z + boundsCollider.bounds.extents.z);
 
-        return new Vector3(x, y, z);
+        Vector3 randomPos = new Vector3(x, y, z);
+
+        // Use Physics.Raycast to check for collisions with objects on the "Obstacles" layer
+        RaycastHit hit;
+        if (Physics.Raycast(randomPos, Vector3.down, out hit, Mathf.Infinity, dontSpawnLayer))
+        {
+            // If a collision is detected, try again with a new random position
+            return GetRandomPosition();
+        }
+        else
+        {
+            // If no collision is detected, return the random position
+            return randomPos;
+        }
     }
+   
 
 }

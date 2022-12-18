@@ -495,7 +495,7 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   m_GroundCheck: {fileID: 430633094}
   m_CeilingCheck: {fileID: 1205630578}
   m_CrouchDisableCollider: {fileID: 0}
@@ -2425,10 +2425,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &982089464
-BoxCollider2D:
+--- !u!60 &982089464
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2440,7 +2440,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.03309, y: 1.9792252}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2450,9 +2450,17 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 30.226784, y: 15.188919}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 12.526303, y: 8.764873}
+      - {x: -16.554953, y: 8.679856}
+      - {x: -16.580252, y: 5.4238286}
+      - {x: -16.5908, y: 4.066212}
+      - {x: -17.522202, y: 4.068243}
+      - {x: -17.53192, y: -4.202436}
+      - {x: -16.571642, y: -4.3585134}
+      - {x: -16.546888, y: -5.0110393}
+      - {x: 12.547276, y: -4.9016867}
 --- !u!1 &1153816724
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,7 +2605,7 @@ Transform:
   m_Children:
   - {fileID: 519420032}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1205630577
 GameObject:
@@ -2758,10 +2766,10 @@ RectTransform:
   m_Father: {fileID: 1153816725}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 335.5, y: 186.5}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -155.2539, y: -25}
+  m_SizeDelta: {x: 310.5078, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1760385361
 GameObject:
@@ -2973,6 +2981,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1899575914}
   - component: {fileID: 1899575913}
+  - component: {fileID: 1899575915}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2995,11 +3004,15 @@ MonoBehaviour:
   score: 0
   highScore: 0
   wave: 1
+  highWave: 0
   player: {fileID: 705695782}
   houndPrefab: {fileID: 3155504200095805786, guid: 9db4adbea711f5b47be5f36eaf11a76c, type: 3}
   dogPrefab: {fileID: 7690265881737157100, guid: a66b30170a7ca864199859eb7d85279d, type: 3}
   nextDog: 0
   nextHound: 0
+  dontSpawnLayer:
+    serializedVersion: 2
+    m_Bits: 351
   scoreText: {fileID: 1859606531}
   highScoreText: {fileID: 1214526095}
   boundsCollider: {fileID: 982089464}
@@ -3017,3 +3030,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1899575915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899575912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b564ff7705e97f4ead5f029f60dc27a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leaderboards:
+  - scoreboardID: scoreleaderboard
+    Name: 
+    Type: 
+  - scoreboardID: waveleaderboard
+    Name: 
+    Type: 
+  currentLeaderboard: 0
+  leaderboardText: []
+  leaderboardTitle: {fileID: 0}
